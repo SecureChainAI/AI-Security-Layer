@@ -226,13 +226,6 @@ contract Fomo is modularShort {
         _;
     }
 
-//==============================================================================
-//     _    |_ |. _   |`    _  __|_. _  _  _  .
-//    |_)|_||_)||(_  ~|~|_|| |(_ | |(_)| |_\  .  (use these to interact with contract)
-//====|=========================================================================
-    /**
-     * @dev emergency buy uses last stored affiliate ID and team snek
-     */
     function()
         isActivated()
         isHuman()
@@ -567,30 +560,6 @@ contract Fomo is modularShort {
         }
    }
 
-    /**
-     * @dev use these to register names.  they are just wrappers that will send the
-     * registration requests to the PlayerBook contract.  So registering here is the 
-     * same as registering there.  UI will always display the last name you registered.
-     * but you will still own all previously registered names to use as affiliate 
-     * links.
-     * - must pay a registration fee.
-     * - name must be unique
-     * - names will be converted to lowercase
-     * - name cannot start or end with a space 
-     * - cannot have more than 1 space in a row
-     * - cannot be only numbers
-     * - cannot start with 0x 
-     * - name must be at least 1 char
-     * - max length of 32 characters long
-     * - allowed characters: a-z, 0-9, and space
-     * -functionhash- 0x921dec21 (using ID for affiliate)
-     * -functionhash- 0x3ddd4698 (using address for affiliate)
-     * -functionhash- 0x685ffd83 (using name for affiliate)
-     * @param _nameString players desired name
-     * @param _affCode affiliate ID, address, or name of who referred you
-     * @param _all set to true if you want this to push your info to all games 
-     * (this might cost a lot of gas)
-     */
     function registerNameXID(string _nameString, uint256 _affCode, bool _all)
         isHuman()
         public
@@ -638,15 +607,7 @@ contract Fomo is modularShort {
         // fire event
         emit F3Devents.onNewName(_pID, _addr, _name, _isNewPlayer, _affID, plyr_[_affID].addr, plyr_[_affID].name, _paid, now);
     }
-//==============================================================================
-//     _  _ _|__|_ _  _ _  .
-//    (_|(/_ |  | (/_| _\  . (for UI & viewing things on etherscan)
-//=====_|=======================================================================
-    /**
-     * @dev return the price buyer will pay for next 1 individual key.
-     * -functionhash- 0x018a25e8
-     * @return price for next key bought (in wei format)
-     */
+
     function getBuyPrice()
         public
         view
@@ -750,24 +711,6 @@ contract Fomo is modularShort {
         return(  ((((round_[_rID].mask).add(((((round_[_rID].pot).mul(potSplit_[round_[_rID].team].gen)) / 100).mul(1000000000000000000)) / (round_[_rID].keys))).mul(plyrRnds_[_pID][_rID].keys)) / 1000000000000000000)  );
     }
 
-    /**
-     * @dev returns all current round info needed for front end
-     * -functionhash- 0x747dff42
-     * @return eth invested during ICO phase
-     * @return round id 
-     * @return total keys for round 
-     * @return time round ends
-     * @return time round started
-     * @return current pot 
-     * @return current team ID & player ID in lead 
-     * @return current player in leads address 
-     * @return current player in leads name
-     * @return whales eth in for round
-     * @return bears eth in for round
-     * @return sneks eth in for round
-     * @return bulls eth in for round
-     * @return airdrop tracker # & airdrop pot
-     */
     function getCurrentRoundInfo()
         public
         view
@@ -795,19 +738,6 @@ contract Fomo is modularShort {
         );
     }
 
-    /**
-     * @dev returns player info based on address.  if no address is given, it will 
-     * use msg.sender 
-     * -functionhash- 0xee0b5d8b
-     * @param _addr address of the player you want to lookup 
-     * @return player ID 
-     * @return player name
-     * @return keys owned (current round)
-     * @return winnings vault
-     * @return general vault 
-     * @return affiliate vault 
-	 * @return player round eth
-     */
     function getPlayerInfoByAddress(address _addr)
         public
         view
@@ -834,14 +764,6 @@ contract Fomo is modularShort {
         );
     }
 
-//==============================================================================
-//     _ _  _ _   | _  _ . _  .
-//    (_(_)| (/_  |(_)(_||(_  . (this + tools + calcs + modules = our softwares engine)
-//=====================_|=======================================================
-    /**
-     * @dev logic runs whenever a buy order is executed.  determines how to handle 
-     * incoming eth depending on if we are in an active round or not
-     */
     function buyCore(uint256 _pID, uint256 _affID, uint256 _team, F3Ddatasets.EventReturns memory _eventData_)
         private
     {
@@ -1008,14 +930,7 @@ contract Fomo is modularShort {
             endTx(_pID, _team, _eth, _keys, _eventData_);
         }
     }
-//==============================================================================
-//     _ _ | _   | _ _|_ _  _ _  .
-//    (_(_||(_|_||(_| | (_)| _\  .
-//==============================================================================
-    /**
-     * @dev calculates unmasked earnings (just calculates, does not update mask)
-     * @return earnings in wei format
-     */
+
     function calcUnMaskedEarnings(uint256 _pID, uint256 _rIDlast)
         private
         view
@@ -1024,13 +939,6 @@ contract Fomo is modularShort {
         return(  (((round_[_rIDlast].mask).mul(plyrRnds_[_pID][_rIDlast].keys)) / (1000000000000000000)).sub(plyrRnds_[_pID][_rIDlast].mask)  );
     }
 
-    /** 
-     * @dev returns the amount of keys you would get given an amount of eth. 
-     * -functionhash- 0xce89c80c
-     * @param _rID round ID you want price for
-     * @param _eth amount of eth sent in 
-     * @return keys received 
-     */
     function calcKeysReceived(uint256 _rID, uint256 _eth)
         public
         view
@@ -1046,12 +954,6 @@ contract Fomo is modularShort {
             return ( (_eth).keys() );
     }
 
-    /** 
-     * @dev returns current eth price for X keys.  
-     * -functionhash- 0xcf808000
-     * @param _keys number of keys desired (in 18 decimal format)
-     * @return amount of eth needed to send
-     */
     function iWantXKeys(uint256 _keys)
         public
         view
@@ -1069,13 +971,7 @@ contract Fomo is modularShort {
         else // rounds over.  need price for new round
             return ( (_keys).eth() );
     }
-//==============================================================================
-//    _|_ _  _ | _  .
-//     | (_)(_)|_\  .
-//==============================================================================
-    /**
-	 * @dev receives name/player info from names contract 
-     */
+
     function receivePlayerInfo(uint256 _pID, address _addr, bytes32 _name, uint256 _laff)
         external
     {
@@ -1338,16 +1234,6 @@ contract Fomo is modularShort {
         return(_eventData_);
     }
 
-    // function potSwap()
-    //     external
-    //     payable
-    // {
-    //     // setup local rID
-    //     uint256 _rID = rID_ + 1;
-
-    //     round_[_rID].pot = round_[_rID].pot.add(msg.value);
-    //     emit F3Devents.onPotSwapDeposit(_rID, msg.value);
-    // }
 
     /**
      * @dev distributes eth based on fees to gen and pot
@@ -1401,17 +1287,7 @@ contract Fomo is modularShort {
         private
         returns(uint256)
     {
-        /* MASKING NOTES
-            earnings masks are a tricky thing for people to wrap their minds around.
-            the basic thing to understand here.  is were going to have a global
-            tracker based on profit per share for each round, that increases in
-            relevant proportion to the increase in share supply.
-            
-            the player will have an additional mask that basically says "based
-            on the rounds mask, my shares, and how much i've already withdrawn,
-            how much is still owed to me?"
-        */
-        
+
         // calc profit per key & round mask based on this buy:  (dust goes to pot)
         uint256 _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys);
         round_[_rID].mask = _ppt.add(round_[_rID].mask);
@@ -1475,13 +1351,7 @@ contract Fomo is modularShort {
             airDropPot_
         );
     }
-//==============================================================================
-//    (~ _  _    _._|_    .
-//    _)(/_(_|_|| | | \/  .
-//====================/=========================================================
-    /** upon contract deploy, it will be deactivated.  this is a one time
-     * use function that will activate the contract.  we do this so devs 
-     * have time to set things up on the web end                   **/
+
     bool public activated_ = false;
     function activate()
         public
@@ -1503,30 +1373,8 @@ contract Fomo is modularShort {
     }
 }
 
-//==============================================================================
-//   __|_ _    __|_ _  .
-//  _\ | | |_|(_ | _\  .
-//==============================================================================
 library F3Ddatasets {
-    //compressedData key
-    // [76-33][32][31][30][29][28-18][17][16-6][5-3][2][1][0]
-        // 0 - new player (bool)
-        // 1 - joined round (bool)
-        // 2 - new  leader (bool)
-        // 3-5 - air drop tracker (uint 0-999)
-        // 6-16 - round end time
-        // 17 - winnerTeam
-        // 18 - 28 timestamp 
-        // 29 - team
-        // 30 - 0 = reinvest (round), 1 = buy (round), 2 = buy (ico), 3 = reinvest (ico)
-        // 31 - airdrop happened bool
-        // 32 - airdrop tier 
-        // 33 - airdrop amount won
-    //compressedIDs key
-    // [77-52][51-26][25-0]
-        // 0-25 - pID 
-        // 26-51 - winPID
-        // 52-77 - rID
+   
     struct EventReturns {
         uint256 compressedData;
         uint256 compressedIDs;
@@ -1577,10 +1425,6 @@ library F3Ddatasets {
     }
 }
 
-//==============================================================================
-//  |  _      _ _ | _  .
-//  |<(/_\/  (_(_||(_  .
-//=======/======================================================================
 library F3DKeysCalcShort {
     using SafeMath for *;
     /**
@@ -1638,11 +1482,6 @@ library F3DKeysCalcShort {
     }
 }
 
-//==============================================================================
-//  . _ _|_ _  _ |` _  _ _  _  .
-//  || | | (/_| ~|~(_|(_(/__\  .
-//==============================================================================
-
 interface PlayerBookInterface {
     function getPlayerID(address _addr) external returns (uint256);
     function getPlayerName(uint256 _pID) external view returns (bytes32);
@@ -1656,16 +1495,7 @@ interface PlayerBookInterface {
 
 
 library NameFilter {
-    /**
-     * @dev filters name strings
-     * -converts uppercase to lower case.  
-     * -makes sure it does not start/end with a space
-     * -makes sure it does not contain multiple spaces in a row
-     * -cannot be only numbers
-     * -cannot start with 0x 
-     * -restricts characters to A-Z, a-z, 0-9, and space.
-     * @return reprocessed string in bytes32 format
-     */
+    
     function nameFilter(string _input)
         internal
         pure
@@ -1731,16 +1561,6 @@ library NameFilter {
     }
 }
 
-/**
- * @title SafeMath v0.1.9
- * @dev Math operations with safety checks that throw on error
- * change notes:  original SafeMath library from OpenZeppelin modified by Inventor
- * - added sqrt
- * - added sq
- * - added pwr 
- * - changed asserts to requires with error log outputs
- * - removed div, its useless
- */
 library SafeMath {
 
     /**
