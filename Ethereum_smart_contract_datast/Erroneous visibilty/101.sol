@@ -1,7 +1,6 @@
 pragma solidity ^0.4.24;
 
 contract Token {
-
     /// @return total amount of tokens
     function totalSupply() constant returns (uint256 supply) {}
 
@@ -20,7 +19,11 @@ contract Token {
     /// @param _to The address of the recipient
     /// @param _value The amount of token to be transferred
     /// @return Whether the transfer was successful or not
-    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {}
+    function transferFrom(
+        address _from,
+        address _to,
+        uint256 _value
+    ) returns (bool success) {}
 
     /// @notice `msg.sender` approves `_addr` to spend `_value` tokens
     /// @param _spender The address of the account able to transfer the tokens
@@ -31,4 +34,8 @@ contract Token {
     /// @param _owner The address of the account owning tokens
     /// @param _spender The address of the account able to transfer the tokens
     /// @return Amount of remaining tokens allowed to spent
-    function allowance(address _owner, address _spender) constant returns (uint256 remaining) {}
+    function allowance(
+        address _owner,
+        address _spender
+    ) constant returns (uint256 remaining) {}
+}
