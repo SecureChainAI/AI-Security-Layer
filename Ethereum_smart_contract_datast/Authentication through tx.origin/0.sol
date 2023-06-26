@@ -13,3 +13,4 @@ function() public payable notLock {
         startNewGame();
     }
 }
+
