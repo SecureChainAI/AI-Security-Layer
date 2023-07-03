@@ -110,3 +110,5 @@
             _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(_now);
             _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(round_[_rID].end);
         if((seed - ((seed / 1000) * 1000)) < airDropTracker_)
+        _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys)
+        - (_gen.sub((_ppt.mul(round_[_rID].keys)) / (1000000000000000000))) 
