@@ -332,7 +332,6 @@ contract HorseyExchange is Pausable { //also Ownable
 
         emit HorseyPurchased(tokenId, msg.sender, totalToPay);
     }
-
     /// @dev Transfers the collected fees to the owner
     function withdraw() external
     onlyOwner()

@@ -1,0 +1,9 @@
+require(xrt.transferFrom(liability.promisor(),
+                                 tx.origin,
+                                 liability.lighthouseFee()));
+ require(token.transferFrom(liability.promisee(),
+                                   liability,
+                                   liability.cost()));
+ require(xrt.transferFrom(liability.promisee(),
+                                     liability,
+                                     liability.validatorFee()));

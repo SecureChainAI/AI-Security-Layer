@@ -1,0 +1,1 @@
+        tokenContract.transfer(destination, amount);
