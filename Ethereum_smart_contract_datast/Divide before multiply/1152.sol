@@ -1,0 +1,17 @@
+    uint _divTokensToBurn = (_frontEndTokensToBurn.mul(userDivRate)).div(magnitude);
+    int256 _updatedPayouts  = (int256) (profitPerDivToken * _divTokensToBurn + (_taxedEthereum * magnitude));
+    uint _dividends = (_ethereum.mul(getUserAverageDividendRate(msg.sender)).div(100)).div(magnitude);
+      profitPerDivToken = profitPerDivToken.add((_dividends * magnitude) / divTokenSupply);
+      price = (1e18 * 0.001 ether) / tokensReceivedForEth;
+    uint theSellPrice = price.sub((price.mul(getUserAverageDividendRate(msg.sender)).div(100)).div(magnitude));
+      price = (1e18 * 0.001 ether) / tokensReceivedForEth;
+    uint theBuyPrice = (price.mul(dividendRate).div(100)).add(price);
+    dividendAmount = (remainingEth.mul(dividendRate)).div(100);
+        toReferrer = (dividendAmount.mul(referrer_percentage)).div(100);
+      fee = fee - (fee - (dividendTokensBought * (toTokenHolders * magnitude / (divTokenSupply))));
+      return _ethereumAmount.div(tokenPriceInitial_) * 1e18;
+    uint _amountOfDivTokens = _amountOfFrontEndTokens.mul(getUserAverageDividendRate(_customerAddress)).div(magnitude);
+    payoutsTo_[_customerAddress] -= (int256) (profitPerDivToken * _amountOfDivTokens);
+    payoutsTo_[_toAddress]       += (int256) (profitPerDivToken * _amountOfDivTokens);
+    uint z = (x + 1) / 3;
+      z = (x / (z*z) + 2 * z) / 3;

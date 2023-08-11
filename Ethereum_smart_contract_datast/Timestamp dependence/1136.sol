@@ -1,0 +1,10 @@
+    if (now >= startPreICO && now < endPreICO){
+    if (now >= startICO && now < endICO){
+    if (now >= startPreICO && now < endPreICO){
+    if (now >= startICO && now < endICO){
+    if (now >= startPreICO && now < endPreICO){
+    if (now >= startICO && now < endICO){
+    require(now >= startPreICO);
+    require(now <= endICO);
+    if (now >= startPreICO && now < endPreICO){
+    if (now >= startICO && now < endICO){

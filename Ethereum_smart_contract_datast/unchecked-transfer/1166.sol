@@ -1,0 +1,10 @@
+        ERC20TokenInterface(tokenAddress).transfer(beneficiary, amountToTransfer);
+        ERC20TokenInterface(tokenAddress).transfer(beneficiary, releasableFunds);
+        ERC20TokenInterface(tokenAddress).transfer(owner, getTokenBalance());
+        ERC20TokenInterface(_tokenAddress).transfer(_to, _amount);
+        ERC20TokenInterface(tokenAddress).transfer(_to, _amount);
+        ERC20TokenInterface(tokenAddress).transfer(_vestingContract, _amount);
+            ERC20TokenInterface(tokenAddress).transfer(_to, _amount);
+            ERC20TokenInterface(_tokenAddress).transfer(_to, _amount);
+        ERC20TokenInterface(tokenAddress).transfer(owner, getTokenBalance());
+        ERC20TokenInterface(_tokenAddress).transferFrom(_from, address(this), _amount);
