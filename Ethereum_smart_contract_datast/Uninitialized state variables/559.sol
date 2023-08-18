@@ -1,0 +1,2 @@
+    uint256 public airDropPot_;     
+ 

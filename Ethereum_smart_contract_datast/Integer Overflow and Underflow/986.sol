@@ -1,0 +1,1 @@
+amount = uint256(msg.value * rate);
