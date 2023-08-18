@@ -1,0 +1,14 @@
+ require(now >= unlockDate1);
+	  if (now <= unlockDate2){
+ require(now >= unlockDate1);
+	  if (now <= unlockDate2){
+    if (now >= startICOStage1 && now < endICOStage1){
+    if (now >= startICOStage2 && now < endICOStage2){
+    if (now >= startICOStage3 && now < endICOStage3){
+    if (now >= startICOStage4 && now < endICOStage4){
+    if (now >= startICOStage1 && now < endICOStage4){
+    if (now >= startICOStage1 && now < endICOStage4){
+  require(now >= startICOStage1);
+    require(now <= endICOStage4);
+	  require(now >= unlockMintDate1);
+	  if (now <= unlockMintDate2){
