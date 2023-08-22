@@ -1,7 +1,5 @@
 pragma solidity ^0.4.23;
 
-
-
 /**
 
  * @title SafeMath
@@ -11,8 +9,6 @@ pragma solidity ^0.4.23;
  */
 
 library SafeMath {
-
-
     /**
 
      * @dev Multiplies two numbers, throws on overflow.
@@ -20,7 +16,6 @@ library SafeMath {
      */
 
     function mul(uint256 a, uint256 b) internal pure returns (uint256 c) {
-
         // Gas optimization: this is cheaper than asserting 'a' not being zero, but the
 
         // benefit is lost if 'b' is also tested.
@@ -28,20 +23,15 @@ library SafeMath {
         // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522
 
         if (a == 0) {
-
             return 0;
-
         }
-
 
         c = a * b;
 
         assert(c / a == b);
 
         return c;
-
     }
-
 
     /**
 
@@ -50,7 +40,6 @@ library SafeMath {
      */
 
     function div(uint256 a, uint256 b) internal pure returns (uint256) {
-
         // assert(b > 0); // Solidity automatically throws when dividing by 0
 
         // uint256 c = a / b;
@@ -58,9 +47,7 @@ library SafeMath {
         // assert(a == b * c + a % b); // There is no case in which this doesn't hold
 
         return a / b;
-
     }
-
 
     /**
 
@@ -69,13 +56,10 @@ library SafeMath {
      */
 
     function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-
         assert(b <= a);
 
         return a - b;
-
     }
-
 
     /**
 
@@ -84,18 +68,13 @@ library SafeMath {
      */
 
     function add(uint256 a, uint256 b) internal pure returns (uint256 c) {
-
         c = a + b;
 
         assert(c >= a);
 
         return c;
-
     }
-
 }
-
-
 
 /**
 
@@ -104,8 +83,6 @@ library SafeMath {
  */
 
 library AddressUtils {
-
-
     /**
 
      * Returns whether the target address is a contract
@@ -121,7 +98,6 @@ library AddressUtils {
      */
 
     function isContract(address addr) internal view returns (bool) {
-
         uint256 size;
 
         // XXX Currently there is no better way to check if there is a contract in an address
@@ -138,16 +114,13 @@ library AddressUtils {
 
         // solium-disable-next-line security/no-inline-assembly
 
-        assembly { size := extcodesize(addr) }
+        assembly {
+            size := extcodesize(addr)
+        }
 
         return size > 0;
-
     }
-
-
 }
-
-
 
 /**
 
@@ -160,7 +133,6 @@ library AddressUtils {
  */
 
 contract ERC721Receiver {
-
     /**
 
     * @dev Magic value to be returned upon successful reception of an NFT
@@ -172,7 +144,6 @@ contract ERC721Receiver {
     */
 
     bytes4 internal constant ERC721_RECEIVED = 0xf0b9e5ba;
-
 
     /**
 
@@ -198,10 +169,12 @@ contract ERC721Receiver {
 
     */
 
-    function onERC721Received(address _from, uint256 _tokenId, bytes _data) public returns(bytes4);
-
+    function onERC721Received(
+        address _from,
+        uint256 _tokenId,
+        bytes _data
+    ) public returns (bytes4);
 }
-
 
 /**
 
@@ -212,8 +185,6 @@ contract ERC721Receiver {
  */
 
 interface ERC165 {
-
-
     /**
 
      * @notice Query if a contract implements an interface
@@ -226,11 +197,10 @@ interface ERC165 {
 
      */
 
-    function supportsInterface(bytes4 _interfaceId) external view returns (bool);
-
+    function supportsInterface(
+        bytes4 _interfaceId
+    ) external view returns (bool);
 }
-
-
 
 /**
 
@@ -241,13 +211,23 @@ interface ERC165 {
  */
 
 contract ERC721Basic is ERC165 {
+    event Transfer(
+        address indexed _from,
+        address indexed _to,
+        uint256 indexed _tokenId
+    );
 
-    event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
+    event Approval(
+        address indexed _owner,
+        address indexed _approved,
+        uint256 indexed _tokenId
+    );
 
-    event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
-
-    event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
-
+    event ApprovalForAll(
+        address indexed _owner,
+        address indexed _operator,
+        bool _approved
+    );
 
     function balanceOf(address _owner) public view returns (uint256 _balance);
 
@@ -255,27 +235,34 @@ contract ERC721Basic is ERC165 {
 
     function exists(uint256 _tokenId) public view returns (bool _exists);
 
-
     function approve(address _to, uint256 _tokenId) public;
 
-    function getApproved(uint256 _tokenId) public view returns (address _operator);
-
+    function getApproved(
+        uint256 _tokenId
+    ) public view returns (address _operator);
 
     function setApprovalForAll(address _operator, bool _approved) public;
 
-    function isApprovedForAll(address _owner, address _operator) public view returns (bool);
-
+    function isApprovedForAll(
+        address _owner,
+        address _operator
+    ) public view returns (bool);
 
     function transferFrom(address _from, address _to, uint256 _tokenId) public;
 
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId) public;
+    function safeTransferFrom(
+        address _from,
+        address _to,
+        uint256 _tokenId
+    ) public;
 
-
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes _data) public;
-
+    function safeTransferFrom(
+        address _from,
+        address _to,
+        uint256 _tokenId,
+        bytes _data
+    ) public;
 }
-
-
 
 /**
 
@@ -286,16 +273,15 @@ contract ERC721Basic is ERC165 {
  */
 
 contract ERC721Enumerable is ERC721Basic {
-
     function totalSupply() public view returns (uint256);
 
-    function tokenOfOwnerByIndex(address _owner, uint256 _index) public view returns (uint256 _tokenId);
+    function tokenOfOwnerByIndex(
+        address _owner,
+        uint256 _index
+    ) public view returns (uint256 _tokenId);
 
     function tokenByIndex(uint256 _index) public view returns (uint256);
-
 }
-
-
 
 /**
 
@@ -306,16 +292,12 @@ contract ERC721Enumerable is ERC721Basic {
  */
 
 contract ERC721Metadata is ERC721Basic {
-
     function name() external view returns (string _name);
 
     function symbol() external view returns (string _symbol);
 
     function tokenURI(uint256 _tokenId) public view returns (string);
-
 }
-
-
 
 /**
 
@@ -327,22 +309,13 @@ contract ERC721Metadata is ERC721Basic {
 
 contract ERC721 is ERC721Basic, ERC721Enumerable, ERC721Metadata {
 
-
 }
-
-
 
 contract ERC721Holder is ERC721Receiver {
-
-    function onERC721Received(address, uint256, bytes) public returns(bytes4) {
-
+    function onERC721Received(address, uint256, bytes) public returns (bytes4) {
         return ERC721_RECEIVED;
-
     }
-
 }
-
-
 
 /**
 
@@ -355,7 +328,6 @@ contract ERC721Holder is ERC721Receiver {
  */
 
 contract SupportsInterfaceWithLookup is ERC165 {
-
     bytes4 public constant InterfaceId_ERC165 = 0x01ffc9a7;
 
     /**
@@ -366,7 +338,6 @@ contract SupportsInterfaceWithLookup is ERC165 {
 
      */
 
-
     /**
 
      * @dev a mapping of interface id to whether or not it's supported
@@ -374,7 +345,6 @@ contract SupportsInterfaceWithLookup is ERC165 {
      */
 
     mapping(bytes4 => bool) internal supportedInterfaces;
-
 
     /**
 
@@ -385,11 +355,8 @@ contract SupportsInterfaceWithLookup is ERC165 {
      */
 
     constructor() public {
-
         _registerInterface(InterfaceId_ERC165);
-
     }
-
 
     /**
 
@@ -397,12 +364,11 @@ contract SupportsInterfaceWithLookup is ERC165 {
 
      */
 
-    function supportsInterface(bytes4 _interfaceId) external view returns (bool) {
-
+    function supportsInterface(
+        bytes4 _interfaceId
+    ) external view returns (bool) {
         return supportedInterfaces[_interfaceId];
-
     }
-
 
     /**
 
@@ -411,16 +377,11 @@ contract SupportsInterfaceWithLookup is ERC165 {
      */
 
     function _registerInterface(bytes4 _interfaceId) internal {
-
         require(_interfaceId != 0xffffffff);
 
         supportedInterfaces[_interfaceId] = true;
-
     }
-
 }
-
-
 
 /**
 
@@ -431,8 +392,6 @@ contract SupportsInterfaceWithLookup is ERC165 {
  */
 
 contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
-
-
     bytes4 private constant InterfaceId_ERC721 = 0x80ac58cd;
 
     /*
@@ -459,7 +418,6 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
      */
 
-
     bytes4 private constant InterfaceId_ERC721Exists = 0x4f558e79;
 
     /*
@@ -470,11 +428,9 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
      */
 
-
     using SafeMath for uint256;
 
     using AddressUtils for address;
-
 
     // Equals to `bytes4(keccak256("onERC721Received(address,uint256,bytes)"))`
 
@@ -482,26 +438,21 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
     bytes4 constant ERC721_RECEIVED = 0xf0b9e5ba;
 
-
     // Mapping from token ID to owner
 
-    mapping (uint256 => address) internal tokenOwner;
-
+    mapping(uint256 => address) internal tokenOwner;
 
     // Mapping from token ID to approved address
 
-    mapping (uint256 => address) internal tokenApprovals;
-
+    mapping(uint256 => address) internal tokenApprovals;
 
     // Mapping from owner to number of owned token
 
-    mapping (address => uint256) internal ownedTokensCount;
-
+    mapping(address => uint256) internal ownedTokensCount;
 
     // Mapping from owner to operator approvals
 
-    mapping (address => mapping (address => bool)) internal operatorApprovals;
-
+    mapping(address => mapping(address => bool)) internal operatorApprovals;
 
     /**
 
@@ -512,13 +463,10 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     modifier onlyOwnerOf(uint256 _tokenId) {
-
         require(ownerOf(_tokenId) == msg.sender);
 
         _;
-
     }
-
 
     /**
 
@@ -529,24 +477,18 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     modifier canTransfer(uint256 _tokenId) {
-
         require(isApprovedOrOwner(msg.sender, _tokenId));
 
         _;
-
     }
 
-
     constructor() public {
-
         // register the supported interfaces to conform to ERC721 via ERC165
 
         _registerInterface(InterfaceId_ERC721);
 
         _registerInterface(InterfaceId_ERC721Exists);
-
     }
-
 
     /**
 
@@ -559,13 +501,10 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     function balanceOf(address _owner) public view returns (uint256) {
-
         require(_owner != address(0));
 
         return ownedTokensCount[_owner];
-
     }
-
 
     /**
 
@@ -578,15 +517,12 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     function ownerOf(uint256 _tokenId) public view returns (address) {
-
         address owner = tokenOwner[_tokenId];
 
         require(owner != address(0));
 
         return owner;
-
     }
-
 
     /**
 
@@ -599,13 +535,10 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     function exists(uint256 _tokenId) public view returns (bool) {
-
         address owner = tokenOwner[_tokenId];
 
         return owner != address(0);
-
     }
-
 
     /**
 
@@ -624,20 +557,16 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     function approve(address _to, uint256 _tokenId) public {
-
         address owner = ownerOf(_tokenId);
 
         require(_to != owner);
 
         require(msg.sender == owner || isApprovedForAll(owner, msg.sender));
 
-
         tokenApprovals[_tokenId] = _to;
 
         emit Approval(owner, _to, _tokenId);
-
     }
-
 
     /**
 
@@ -650,11 +579,8 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     function getApproved(uint256 _tokenId) public view returns (address) {
-
         return tokenApprovals[_tokenId];
-
     }
-
 
     /**
 
@@ -669,15 +595,12 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     function setApprovalForAll(address _to, bool _approved) public {
-
         require(_to != msg.sender);
 
         operatorApprovals[msg.sender][_to] = _approved;
 
         emit ApprovalForAll(msg.sender, _to, _approved);
-
     }
-
 
     /**
 
@@ -691,12 +614,12 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
      */
 
-    function isApprovedForAll(address _owner, address _operator) public view returns (bool) {
-
+    function isApprovedForAll(
+        address _owner,
+        address _operator
+    ) public view returns (bool) {
         return operatorApprovals[_owner][_operator];
-
     }
-
 
     /**
 
@@ -714,12 +637,14 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
     */
 
-    function transferFrom(address _from, address _to, uint256 _tokenId) public canTransfer(_tokenId) {
-
+    function transferFrom(
+        address _from,
+        address _to,
+        uint256 _tokenId
+    ) public canTransfer(_tokenId) {
         require(_from != address(0));
 
         require(_to != address(0));
-
 
         clearApproval(_from, _tokenId);
 
@@ -727,11 +652,8 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
         addTokenTo(_to, _tokenId);
 
-
         emit Transfer(_from, _to, _tokenId);
-
     }
-
 
     /**
 
@@ -755,14 +677,15 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
     */
 
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId) public canTransfer(_tokenId) {
-
+    function safeTransferFrom(
+        address _from,
+        address _to,
+        uint256 _tokenId
+    ) public canTransfer(_tokenId) {
         // solium-disable-next-line arg-overflow
 
         safeTransferFrom(_from, _to, _tokenId, "");
-
     }
-
 
     /**
 
@@ -788,16 +711,18 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
      */
 
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes _data) public canTransfer(_tokenId) {
-
+    function safeTransferFrom(
+        address _from,
+        address _to,
+        uint256 _tokenId,
+        bytes _data
+    ) public canTransfer(_tokenId) {
         transferFrom(_from, _to, _tokenId);
 
         // solium-disable-next-line arg-overflow
 
         require(checkAndCallSafeTransfer(_from, _to, _tokenId, _data));
-
     }
-
 
     /**
 
@@ -814,21 +739,9 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     function isApprovedOrOwner(
-
         address _spender,
-
         uint256 _tokenId
-
-    )
-
-        internal
-
-        view
-
-        returns (bool)
-
-    {
-
+    ) internal view returns (bool) {
         address owner = ownerOf(_tokenId);
 
         // Disable solium check because of
@@ -837,18 +750,10 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
         // solium-disable-next-line operator-whitespace
 
-        return (
-
-            _spender == owner ||
-
+        return (_spender == owner ||
             getApproved(_tokenId) == _spender ||
-
-            isApprovedForAll(owner, _spender)
-
-        );
-
+            isApprovedForAll(owner, _spender));
     }
-
 
     /**
 
@@ -863,15 +768,12 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     function _mint(address _to, uint256 _tokenId) internal {
-
         require(_to != address(0));
 
         addTokenTo(_to, _tokenId);
 
         emit Transfer(address(0), _to, _tokenId);
-
     }
-
 
     /**
 
@@ -886,19 +788,14 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     function clearApproval(address _owner, uint256 _tokenId) internal {
-
         require(ownerOf(_tokenId) == _owner);
 
         if (tokenApprovals[_tokenId] != address(0)) {
-
             tokenApprovals[_tokenId] = address(0);
 
             emit Approval(_owner, address(0), _tokenId);
-
         }
-
     }
-
 
     /**
 
@@ -911,15 +808,12 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     function addTokenTo(address _to, uint256 _tokenId) internal {
-
         require(tokenOwner[_tokenId] == address(0));
 
         tokenOwner[_tokenId] = _to;
 
         ownedTokensCount[_to] = ownedTokensCount[_to].add(1);
-
     }
-
 
     /**
 
@@ -932,15 +826,12 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     function removeTokenFrom(address _from, uint256 _tokenId) internal {
-
         require(ownerOf(_tokenId) == _from);
 
         ownedTokensCount[_from] = ownedTokensCount[_from].sub(1);
 
         tokenOwner[_tokenId] = address(0);
-
     }
-
 
     /**
 
@@ -961,41 +852,24 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
      */
 
     function checkAndCallSafeTransfer(
-
         address _from,
-
         address _to,
-
         uint256 _tokenId,
-
         bytes _data
-
-    )
-
-        internal
-
-        returns (bool)
-
-    {
-
+    ) internal returns (bool) {
         if (!_to.isContract()) {
-
             return true;
-
         }
 
-
         bytes4 retval = ERC721Receiver(_to).onERC721Received(
-
-        _from, _tokenId, _data);
+            _from,
+            _tokenId,
+            _data
+        );
 
         return (retval == ERC721_RECEIVED);
-
     }
-
 }
-
-
 
 /**
 
@@ -1007,71 +881,59 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
  */
 
- contract Ownable {
+contract Ownable {
+    address public owner;
 
-     address public owner;
+    address public pendingOwner;
 
-     address public pendingOwner;
+    address public manager;
 
-     address public manager;
+    event OwnershipTransferred(
+        address indexed previousOwner,
+        address indexed newOwner
+    );
 
-
-     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
-
-     /**
+    /**
 
      * @dev Throws if called by any account other than the owner.
 
      */
 
-     modifier onlyOwner() {
+    modifier onlyOwner() {
+        require(msg.sender == owner);
 
-         require(msg.sender == owner);
+        _;
+    }
 
-         _;
-
-     }
-
-
-     /**
+    /**
 
       * @dev Modifier throws if called by any account other than the manager.
 
       */
 
-     modifier onlyManager() {
+    modifier onlyManager() {
+        require(msg.sender == manager);
 
-         require(msg.sender == manager);
+        _;
+    }
 
-         _;
-
-     }
-
-
-     /**
+    /**
 
       * @dev Modifier throws if called by any account other than the pendingOwner.
 
       */
 
-     modifier onlyPendingOwner() {
+    modifier onlyPendingOwner() {
+        require(msg.sender == pendingOwner);
 
-         require(msg.sender == pendingOwner);
+        _;
+    }
 
-         _;
+    constructor() public {
+        owner = msg.sender;
+    }
 
-     }
-
-
-     constructor() public {
-
-         owner = msg.sender;
-
-     }
-
-
-     /**
+    /**
 
       * @dev Allows the current owner to set the pendingOwner address.
 
@@ -1079,31 +941,25 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
       */
 
-     function transferOwnership(address newOwner) public onlyOwner {
+    function transferOwnership(address newOwner) public onlyOwner {
+        pendingOwner = newOwner;
+    }
 
-         pendingOwner = newOwner;
-
-     }
-
-
-     /**
+    /**
 
       * @dev Allows the pendingOwner address to finalize the transfer.
 
       */
 
-     function claimOwnership() public onlyPendingOwner {
+    function claimOwnership() public onlyPendingOwner {
+        emit OwnershipTransferred(owner, pendingOwner);
 
-         emit OwnershipTransferred(owner, pendingOwner);
+        owner = pendingOwner;
 
-         owner = pendingOwner;
+        pendingOwner = address(0);
+    }
 
-         pendingOwner = address(0);
-
-     }
-
-
-     /**
+    /**
 
       * @dev Sets the manager address.
 
@@ -1111,19 +967,12 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
       */
 
-     function setManager(address _manager) public onlyOwner {
+    function setManager(address _manager) public onlyOwner {
+        require(_manager != address(0));
 
-         require(_manager != address(0));
-
-         manager = _manager;
-
-     }
-
-
- }
-
-
-
+        manager = _manager;
+    }
+}
 
 /**
 
@@ -1137,9 +986,12 @@ contract ERC721BasicToken is SupportsInterfaceWithLookup, ERC721Basic {
 
  */
 
-contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721BasicToken, Ownable {
-
-
+contract AviationSecurityToken is
+    SupportsInterfaceWithLookup,
+    ERC721,
+    ERC721BasicToken,
+    Ownable
+{
     bytes4 private constant InterfaceId_ERC721Enumerable = 0x780e9d63;
 
     /**
@@ -1153,7 +1005,6 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
      *   bytes4(keccak256('tokenByIndex(uint256)'))
 
      */
-
 
     bytes4 private constant InterfaceId_ERC721Metadata = 0x5b5e139f;
 
@@ -1169,51 +1020,38 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
 
      */
 
-
     // Token name
 
     string public name_ = "AviationSecurityToken";
-
 
     // Token symbol
 
     string public symbol_ = "AVNS";
 
-
     // Mapping from owner to list of owned token IDs
 
     mapping(address => uint256[]) internal ownedTokens;
-
 
     // Mapping from token ID to index of the owner tokens list
 
     mapping(uint256 => uint256) internal ownedTokensIndex;
 
-
     // Array with all token ids, used for enumeration
 
     uint256[] internal allTokens;
-
 
     // Mapping from token id to position in the allTokens array
 
     mapping(uint256 => uint256) internal allTokensIndex;
 
-
     // Optional mapping for token URIs
 
     mapping(uint256 => string) internal tokenURIs;
 
-
-    struct Data{
-
+    struct Data {
         string liscence;
-
         string URL;
-
     }
-
-    
 
     mapping(uint256 => Data) internal tokenData;
 
@@ -1224,17 +1062,12 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
      */
 
     constructor() public {
-
-
-
         // register the supported interfaces to conform to ERC721 via ERC165
 
         _registerInterface(InterfaceId_ERC721Enumerable);
 
         _registerInterface(InterfaceId_ERC721Metadata);
-
     }
-
 
     /**
 
@@ -1247,11 +1080,8 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
      */
 
     function mint(address _to, uint256 _id) external onlyManager {
-
         _mint(_to, _id);
-
     }
-
 
     /**
 
@@ -1262,11 +1092,8 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
      */
 
     function name() external view returns (string) {
-
         return name_;
-
     }
-
 
     /**
 
@@ -1277,18 +1104,14 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
      */
 
     function symbol() external view returns (string) {
-
         return symbol_;
-
     }
 
-
-    function arrayOfTokensByAddress(address _holder) public view returns(uint256[]) {
-
+    function arrayOfTokensByAddress(
+        address _holder
+    ) public view returns (uint256[]) {
         return ownedTokens[_holder];
-
     }
-
 
     /**
 
@@ -1301,13 +1124,10 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
      */
 
     function tokenURI(uint256 _tokenId) public view returns (string) {
-
         require(exists(_tokenId));
 
         return tokenURIs[_tokenId];
-
     }
-
 
     /**
 
@@ -1321,14 +1141,14 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
 
      */
 
-    function tokenOfOwnerByIndex(address _owner, uint256 _index) public view returns (uint256) {
-
+    function tokenOfOwnerByIndex(
+        address _owner,
+        uint256 _index
+    ) public view returns (uint256) {
         require(_index < balanceOf(_owner));
 
         return ownedTokens[_owner][_index];
-
     }
-
 
     /**
 
@@ -1339,11 +1159,8 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
      */
 
     function totalSupply() public view returns (uint256) {
-
         return allTokens.length;
-
     }
-
 
     /**
 
@@ -1358,13 +1175,10 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
      */
 
     function tokenByIndex(uint256 _index) public view returns (uint256) {
-
         require(_index < totalSupply());
 
         return allTokens[_index];
-
     }
-
 
     /**
 
@@ -1379,13 +1193,10 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
      */
 
     function _setTokenURI(uint256 _tokenId, string _uri) internal {
-
         require(exists(_tokenId));
 
         tokenURIs[_tokenId] = _uri;
-
     }
-
 
     /**
 
@@ -1398,7 +1209,6 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
      */
 
     function addTokenTo(address _to, uint256 _tokenId) internal {
-
         super.addTokenTo(_to, _tokenId);
 
         uint256 length = ownedTokens[_to].length;
@@ -1406,9 +1216,7 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
         ownedTokens[_to].push(_tokenId);
 
         ownedTokensIndex[_tokenId] = length;
-
     }
-
 
     /**
 
@@ -1421,16 +1229,13 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
      */
 
     function removeTokenFrom(address _from, uint256 _tokenId) internal {
-
         super.removeTokenFrom(_from, _tokenId);
-
 
         uint256 tokenIndex = ownedTokensIndex[_tokenId];
 
         uint256 lastTokenIndex = ownedTokens[_from].length.sub(1);
 
         uint256 lastToken = ownedTokens[_from][lastTokenIndex];
-
 
         ownedTokens[_from][tokenIndex] = lastToken;
 
@@ -1444,15 +1249,12 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
 
         // position of the list
 
-
         ownedTokens[_from].length--;
 
         ownedTokensIndex[_tokenId] = 0;
 
         ownedTokensIndex[lastToken] = tokenIndex;
-
     }
-
 
     /**
 
@@ -1465,40 +1267,28 @@ contract AviationSecurityToken is SupportsInterfaceWithLookup, ERC721, ERC721Bas
      */
 
     function _mint(address _to, uint256 _id) internal {
-
         allTokens.push(_id);
 
         allTokensIndex[_id] = _id;
 
         super._mint(_to, _id);
-
     }
-
-    
 
     function addTokenData(uint _tokenId, string _liscence, string _URL) public {
+        require(ownerOf(_tokenId) == msg.sender);
 
-            require(ownerOf(_tokenId) == msg.sender);
+        tokenData[_tokenId].liscence = _liscence;
 
-            tokenData[_tokenId].liscence = _liscence;
-
-            tokenData[_tokenId].URL = _URL;
-
-
-        
-
+        tokenData[_tokenId].URL = _URL;
     }
 
-    
-
-    function getTokenData(uint _tokenId) public view returns(string Liscence, string URL){
-
+    function getTokenData(
+        uint _tokenId
+    ) public view returns (string Liscence, string URL) {
         require(exists(_tokenId));
 
         Liscence = tokenData[_tokenId].liscence;
 
         URL = tokenData[_tokenId].URL;
-
     }
-
 }
