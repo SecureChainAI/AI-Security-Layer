@@ -13,7 +13,7 @@ pragma solidity 0.4.24;
 /****************************************************************************
 *                       Ownership Contract                                  *
 *                       for authorization Control                           *
-*                       and 0x0 Validation                                  *
+*                       and 0x0 Validation                                 *
 ****************************************************************************/
 contract Ownership {
     address public _owner;
