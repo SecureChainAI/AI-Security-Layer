@@ -1,0 +1,1 @@
+        oddToken.transfer(launcher, amount);

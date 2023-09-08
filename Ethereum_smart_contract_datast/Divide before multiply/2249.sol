@@ -1,0 +1,10 @@
+        return(  ((((round_.mask).add(((((round_.pot).mul(potSplit_)) / 100).mul(1000000000000000000)) / (round_.keys))).mul(plyrRnds_[_pID].keys)) / 1000000000000000000)  );
+                        _prize = ((airDropPot_).mul(25)) / 100;
+                    _eventData_.compressedData += _prize * 1000000000000000000000000000000000;
+        uint256 _gen = (_pot.mul(potSplit_)) / 100;
+        uint256 _ppt = (_gen.mul(1000000000000000000)) / (round_.keys);
+        uint256 _dust = _gen.sub((_ppt.mul(round_.keys)) / 1000000000000000000);
+            _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(round_.end);
+            _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(_now);
+        uint256 _ppt = (_gen.mul(1000000000000000000)) / (round_.keys);
+        return(_gen.sub((_ppt.mul(round_.keys)) / (1000000000000000000)));
