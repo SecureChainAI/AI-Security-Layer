@@ -1,0 +1,1 @@
+        require(now <= listing.dateEnds);

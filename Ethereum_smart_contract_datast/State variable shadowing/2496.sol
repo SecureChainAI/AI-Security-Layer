@@ -1,0 +1,1 @@
+    uint public totalSupply = 10000000000000000000000000000;

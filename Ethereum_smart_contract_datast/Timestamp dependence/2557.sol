@@ -1,0 +1,13 @@
+    if (now >= launchTime.add(270 days)) {
+    } else if (now >= launchTime.add(180 days)) {
+    } else if (now >= launchTime.add(120 days)) {
+    } else if (now >= launchTime.add(90 days)) {
+    } else if (now >= launchTime.add(60 days)) {
+    } else if (now >= launchTime.add(30 days)) {
+      if (freezeTimeBlock[sender] <= now) {
+    if (now >= albosAddress.launchTime().add(270 days)) {
+    } else if (now >= albosAddress.launchTime().add(180 days)) {
+    } else if (now >= albosAddress.launchTime().add(90 days)) {
+    if (now >= albosAddress.launchTime().add(270 days)) {
+    } else if (now >= albosAddress.launchTime().add(180 days)) {
+    } else if (now >= albosAddress.launchTime().add(90 days)) {
